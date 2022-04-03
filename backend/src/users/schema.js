@@ -18,6 +18,13 @@ User.methods.checkPassword = async function(plain) {
     return match;
 }
 
+User.methods.getSafeObject = function() {
+    const user = this;
+    user.password = undefined;
+    user.googleID = undefined;
+    return user;
+}
+
 let model = null;
 
 export function initModel(connection) {

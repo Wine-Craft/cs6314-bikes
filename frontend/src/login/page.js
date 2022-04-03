@@ -1,14 +1,29 @@
-import React from 'react';
+import axios from 'axios';
+import React, {useEffect, useState} from 'react';
 
-import Card from '@mui/material/Card';
+import LoginForm from './form';
+import generateURL from "../utils/url-generator";
 
+export default function LoginPage() {
+    const [ authenticated, setAuthenticated ] = useState(false);
 
-function LoginPage() {
+    async function getMe() {
+        const url = generateURL('/auth/me');
+        const response = await axios.get(url);
+        const data = response.data;
+        console.log(response, data);
+    }
+
+    useEffect(() => {
+        getMe();
+    }, []);
+
     return (
         <div>
-            <Card>
-
-            </Card>
+            <div>
+                TEST
+            </div>
+            <LoginForm />
         </div>
     );
 }

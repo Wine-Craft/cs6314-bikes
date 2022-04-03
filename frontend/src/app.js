@@ -1,9 +1,9 @@
-import LoginForm from './login/form';
+import LoginPage from "./login/page";
 
 function App() {
     return (
         <div>
-            <LoginForm />
+            <LoginPage />
         </div>
     );
 }
