@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {useState} from 'react';
 import GoogleLogin from "react-google-login";
+import GoogleButton from 'react-google-button';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -8,96 +9,144 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import LinearProgress from "@mui/material/LinearProgress";
 
 import '../styles/login.css';
+import { setJWT } from "../utils/jwt-store";
 import generateURL from "../utils/url-generator";
 
 function LoginForm() {
     const [ email, setEmail ] = useState('jnormantransactions@gmail.com');
     const [ password, setPassword ] = useState('1234');
 
+    const [ loading, setLoading ] = useState(false);
+    const [ errorMsg, setErrorMsg ] = useState(null);
+
     async function onLoginClick() {
+        setLoading(true);
+        setErrorMsg(null);
         const url = generateURL('/auth/local/login');
         const response = await axios.post(url, {
             username: email,
             password: password,
         });
-        console.log(response.data);
+        if(response.status === 200) {
+            const jwt_token = response.data.token;
+            setJWT(jwt_token);
+        } else if(response.status === 401) {
+            setErrorMsg("Incorrect email/password combination");
+        } else {
+            setErrorMsg("Server error, try again later.");
+        }
+        setLoading(false);
     }
 
     async function onGoogleSuccess(response) {
+        setLoading(true);
+        setErrorMsg(null);
         const access_token = response.accessToken;
         const url = generateURL('/auth/google/login');
         const postResponse = await axios.post(url, {
             access_token: access_token,
         });
-        console.log(postResponse.data);
+        if(postResponse.status === 200) {
+            const jwt_token = postResponse.data.token;
+            setJWT(jwt_token);
+        } else if(postResponse.status === 401) {
+            setErrorMsg("Invalid Google Login. You might already have an email/password combo.");
+        } else {
+            setErrorMsg("Server error, try again later.");
+        }
+        setLoading(false);
     }
 
+    const disabled = loading;
     return (
-        <Box sx={{
-            maxWidth: 350,
+        <Card sx={{
+            p: 3,
+            maxWidth: '400px',
+            margin: 'auto',
         }}>
-            <Card sx={{
-                p: 3,
+            <Typography variant="h5" mb={ 2 }>
+                Sign in to UTD Bikes
+            </Typography>
+            <> { loading &&
+                <LinearProgress />
+            } { !loading &&
+                <Box sx={{
+                    height: '4px',
+                }} />
+            } </>
+            <Box sx={{
+                my: 2,
             }}>
-                <Typography variant="h6">
-                    Sign In
-                </Typography>
-                <Box sx={{
-                    my: 1,
-                }}>
-                    <TextField
-                        variant="outlined"
-                        label="Email"
-                        style={{
-                            width: '100%',
-                        }}
-                        value={ email }
-                        onChange={ (e) => setEmail(e.target.value) }
-                    />
-                </Box>
-                <Box sx={{
-                    my: 1,
-                }}>
-                    <TextField
-                        variant="outlined"
-                        label="Password"
-                        type="password"
-                        style={{
-                            width: '100%',
-                        }}
-                        value={ password }
-                        onChange={ (e) => setPassword(e.target.value) }
-                    />
-                </Box>
-                <Box sx={{
-                    my: 3,
-                }}>
-                    <Button
-                        variant="contained"
-                        className="login-button"
-                        onClick={ onLoginClick }
-                    >
-                        Login
-                    </Button>
-                </Box>
-                <Divider> or </Divider>
-                <Box sx={{
-                    mt: 3,
-                }}>
-                    <GoogleLogin
-                        clientId={ process.env.REACT_APP_GOOGLE_CLIENT_ID }
-                        buttonText="Sign in with Google"
-                        className="login-button"
-                        onSuccess={ onGoogleSuccess }
-                        onFailure={ (err) => {
-                            console.log(err);
-                        }}
-                    />
-                </Box>
-            </Card>
-        </Box>
+                <TextField
+                    variant="outlined"
+                    label="Email"
+                    style={{
+                        width: '100%',
+                    }}
+                    disabled={ disabled }
+                    value={ email }
+                    onChange={ (e) => setEmail(e.target.value) }
+                />
+            </Box>
+            <Box sx={{
+                my: 1,
+            }}>
+                <TextField
+                    variant="outlined"
+                    label="Password"
+                    type="password"
+                    style={{
+                        width: '100%',
+                    }}
+                    disabled={ disabled }
+                    value={ password }
+                    onChange={ (e) => setPassword(e.target.value) }
+                />
+            </Box>
+            <Box sx={{
+                my: 2,
+            }}>
+                <Button
+                    variant="contained"
+                    className="login-button"
+                    onClick={ onLoginClick }
+                    disabled={ disabled }
+                >
+                    Login
+                </Button>
+            </Box>
+            <Divider><Typography variant="button"> or </Typography></Divider>
+            <Box sx={{
+                mt: 2,
+            }}>
+                <GoogleLogin
+                    type="filled"
+                    clientId={ process.env.REACT_APP_GOOGLE_CLIENT_ID }
+                    buttonText="Sign in with Google"
+                    className="login-button"
+                    disabled={ disabled }
+                    onSuccess={ onGoogleSuccess }
+                    onFailure={ (err) => {
+                        setLoading(false);
+                    }}
+                    render={renderProps => (
+                        <GoogleButton
+                            style={{
+                                width: '100%',
+                            }}
+                            onClick={ () => {
+                                renderProps.onClick();
+                                setLoading(true);
+                            }}
+                            disabled={renderProps.disabled}
+                        >Sign in with google</GoogleButton>
+                    )}
+                />
+            </Box>
+        </Card>
     );
 }
 

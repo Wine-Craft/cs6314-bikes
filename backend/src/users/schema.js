@@ -6,6 +6,8 @@ const User = new mongoose.Schema({
     password: String,
     username: String,
     googleID: String,
+}, {
+    timestamps: true,
 });
 
 User.methods.setPassword = async function(plain) {

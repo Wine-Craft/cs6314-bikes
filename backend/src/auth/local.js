@@ -9,6 +9,7 @@ const strategy = new Strategy({}, async (email, password, done) => {
     try {
         const user = await User.findOne({
             email: email,
+            googleID: null,
         });
 
         if(!user) {
