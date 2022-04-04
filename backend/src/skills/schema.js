@@ -7,7 +7,7 @@ const Skill = new mongoose.Schema({
         unique: true,
     },
     icon: String,
-}, {});
+});
 
 export const Schema = Skill;
 

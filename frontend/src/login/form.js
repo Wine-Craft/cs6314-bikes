@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import GoogleLogin from "react-google-login";
 import GoogleButton from 'react-google-button';
 
@@ -12,10 +12,11 @@ import Typography from '@mui/material/Typography';
 import LinearProgress from "@mui/material/LinearProgress";
 
 import '../styles/login.css';
-import { setJWT } from "../utils/jwt-store";
+import SessionContext from '../session/context';
 import generateURL from "../utils/url-generator";
 
 function LoginForm() {
+    const { setToken } = useContext(SessionContext);
     const [ email, setEmail ] = useState('jnormantransactions@gmail.com');
     const [ password, setPassword ] = useState('1234');
 
@@ -32,7 +33,7 @@ function LoginForm() {
         });
         if(response.status === 200) {
             const jwt_token = response.data.token;
-            setJWT(jwt_token);
+            setToken(jwt_token);
         } else if(response.status === 401) {
             setErrorMsg("Incorrect email/password combination");
         } else {
@@ -51,7 +52,7 @@ function LoginForm() {
         });
         if(postResponse.status === 200) {
             const jwt_token = postResponse.data.token;
-            setJWT(jwt_token);
+            setToken(jwt_token);
         } else if(postResponse.status === 401) {
             setErrorMsg("Invalid Google Login. You might already have an email/password combo.");
         } else {

@@ -4,12 +4,21 @@ import mongoose from 'mongoose';
 const User = new mongoose.Schema({
     email: String,
     password: String,
-    username: String,
+    name: {
+        given: String,
+        family: String,
+    },
+    uploadedImgURL: String,
+
     googleID: String,
+    googleProfileImgURL: String,
 
     isAdmin: Boolean,
 }, {
     timestamps: true,
+    toJSON: {
+        virtuals: true,
+    }
 });
 
 User.methods.setPassword = async function(plain) {
@@ -28,6 +37,16 @@ User.methods.getSafeObject = function() {
     user.googleID = undefined;
     return user;
 }
+
+User.virtual('imageURL').get(function() {
+    if(this.uploadedImageURL != null && this.uploadedImageURL != '') {
+        return this.uploadedImageURL;
+    }
+    if(this.googleProfileImgURL != null && this.googleProfileImgURL != '') {
+        return this.googleProfileImgURL;
+    }
+    return '';
+ });
 
 export const Schema = User;
 

@@ -16,7 +16,7 @@ export const GoogleStrategy = new Strategy({
     try {
         const email = profile.emails[0].value;
 
-        const googleUser = await User.findOne({
+        let googleUser = await User.findOne({
             googleID: profile.id,
         });
 
@@ -29,14 +29,16 @@ export const GoogleStrategy = new Strategy({
                 return done(null, false);
             }
 
-            const newUser = new User({
+            googleUser = new User({
                 googleID: profile.id,
-                username: profile.displayName,
-                email: email,
             });
-            await newUser.save();
-            return done(null, newUser);
         }
+        console.log(profile._json.picture);
+        googleUser.email = email;
+        googleUser.name.given = profile.name.givenName;
+        googleUser.name.family = profile.name.familyName;
+        googleUser.googleProfileImgURL = profile._json.picture;
+        await googleUser.save();
         return done(null, googleUser);
     } catch(err) {
         return done(err);

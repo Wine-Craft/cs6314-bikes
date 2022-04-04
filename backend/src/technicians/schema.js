@@ -6,5 +6,4 @@ const Technician = new mongoose.Schema({
     userID: mongoose.Schema.Types.ObjectId,
     aboutMe: String,
     skills: [ Skill ],
-
 });
