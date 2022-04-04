@@ -12,27 +12,6 @@ import bikePNG from '../images/bicycle.png';
 
 function LoginPage() {
     const theme = useTheme();
-    const [ authenticated, setAuthenticated ] = useState(false);
-
-    async function getMe() {
-        const url = generateURL('/auth/me');
-        const response = await axios.get(url, {
-            headers: {
-                ...getBearerToken()
-            },
-        });
-        if(response.status === 200) {
-            const data = response.data;
-            console.log(data);
-        } else if(response.status === 401) {
-            console.log("Not logged in!");
-        }
-    }
-
-    useEffect(() => {
-        getMe();
-    }, []);
-
     return (
         <Grid
             container
