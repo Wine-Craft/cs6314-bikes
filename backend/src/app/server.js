@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 
 
 import { authRouter } from '../auth/routes.js';
+import { skillsRouter } from "../skills/routes.js";
 
 export default async function initServer() {
     const app = express();
@@ -21,6 +22,7 @@ export default async function initServer() {
 
     // use routes
     app.use('/auth', authRouter);
+    app.use('/skills', skillsRouter);
 
     // publish to HTTP server
     const port = process.env.PORT;

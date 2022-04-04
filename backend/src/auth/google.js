@@ -1,14 +1,13 @@
+import jwt from "jsonwebtoken";
+import { check } from "express-validator";
 import { Strategy } from 'passport-google-token';
 
 import { getModel as getUserModel } from '../users/schema.js';
-import jwt from "jsonwebtoken";
 
 const clientID = process.env.GOOGLE_CLIENT_ID;
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-const domain = process.env.DOMAIN;
-const port = process.env.PORT;
 
-const strategy = new Strategy({
+export const GoogleStrategy = new Strategy({
     clientID: clientID,
     clientSecret: clientSecret,
 }, async (accessToken, refreshToken, profile, done) => {
@@ -42,13 +41,12 @@ const strategy = new Strategy({
     } catch(err) {
         return done(err);
     }
-
-
 });
-
-const callback = async function(req, res) {
+export const googleRules = [
+    check('access_token').exists(),
+];
+export async function googleCallback(req, res) {
     const user = req.user;
-    console.log(user);
     const token = jwt.sign({
         id: user._id,
     }, process.env.JWT_SECRET);
@@ -57,6 +55,3 @@ const callback = async function(req, res) {
         token: token,
     });
 }
-
-export const GoogleStrategy = strategy;
-export const googleCallback = callback;

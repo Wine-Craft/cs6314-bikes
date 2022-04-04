@@ -1,10 +1,16 @@
 import jwt from 'jsonwebtoken';
+import { check } from "express-validator";
 import { Strategy } from 'passport-local';
-
 
 import { getModel as getUserModel }  from '../users/schema.js';
 
-const strategy = new Strategy({}, async (email, password, done) => {
+export const localRules = [
+    check('username').isEmail(),
+    check('password').isLength({
+        min: 1,
+    }),
+];
+export const LocalStrategy = new Strategy({}, async (email, password, done) => {
     const User = getUserModel();
     try {
         const user = await User.findOne({
@@ -15,7 +21,7 @@ const strategy = new Strategy({}, async (email, password, done) => {
         if(!user) {
             return done(null, false);
         }
-        if(await user.checkPassword(password) == false) {
+        if(await user.checkPassword(password) === false) {
             return done(null, false);
         }
         return done(null, user);
@@ -23,17 +29,13 @@ const strategy = new Strategy({}, async (email, password, done) => {
         return done(err, false);
     }
 });
-
-const callback = async function(req, res) {
+export async function localCallback(req, res) {
     const user = req.user;
     const token = jwt.sign({
-       id: user._id,
+        id: user._id,
     }, process.env.JWT_SECRET);
     res.status(200).json({
         user: req.user.getSafeObject(),
         token: token,
     });
-}
-
-export const LocalStrategy = strategy;
-export const localCallback = callback;
+};

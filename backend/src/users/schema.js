@@ -6,6 +6,8 @@ const User = new mongoose.Schema({
     password: String,
     username: String,
     googleID: String,
+
+    isAdmin: Boolean,
 }, {
     timestamps: true,
 });
@@ -26,6 +28,8 @@ User.methods.getSafeObject = function() {
     user.googleID = undefined;
     return user;
 }
+
+export const Schema = User;
 
 let model = null;
 
