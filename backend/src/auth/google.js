@@ -2,7 +2,8 @@ import jwt from "jsonwebtoken";
 import { check } from "express-validator";
 import { Strategy } from 'passport-google-token';
 
-import { getModel as getUserModel } from '../users/schema.js';
+import { getUserModel } from '../users/schema.js';
+import { getTechnicianModel } from "../technicians/schema.js";
 
 const clientID = process.env.GOOGLE_CLIENT_ID;
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
@@ -12,6 +13,7 @@ export const GoogleStrategy = new Strategy({
     clientSecret: clientSecret,
 }, async (accessToken, refreshToken, profile, done) => {
     const User = getUserModel();
+    const Technician = getTechnicianModel();
 
     try {
         const email = profile.emails[0].value;
@@ -33,12 +35,18 @@ export const GoogleStrategy = new Strategy({
                 googleID: profile.id,
             });
         }
-        console.log(profile._json.picture);
+
         googleUser.email = email;
         googleUser.name.given = profile.name.givenName;
         googleUser.name.family = profile.name.familyName;
         googleUser.googleProfileImgURL = profile._json.picture;
-        await googleUser.save();
+        if(googleUser.isModified()) { // if changed
+            await googleUser.save(); // save the user
+
+            if(googleUser.isTechnician) {
+                await Technician.updateTechnicianUser(googleUser); // update the associated technician profile
+            }
+        }
         return done(null, googleUser);
     } catch(err) {
         return done(err);

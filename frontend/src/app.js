@@ -7,7 +7,8 @@ import LogoutPage from "./login/logout";
 import SessionContext from './session/context';
 
 function App() {
-    const { loading, logged_in } = useContext(SessionContext);
+    const { loading, isLoggedIn } = useContext(SessionContext);
+
     return (
         <React.Fragment> { !loading &&
             <Routes>
@@ -16,12 +17,12 @@ function App() {
                         Information page
                     </div>
                 } />
-                <Route path="/login" element={ logged_in ?
+                <Route path="/login" element={ isLoggedIn ?
                     <Navigate to="/home" /> :
                     <LoginPage />
                 } />
                 <Route path="/logout" element={ <LogoutPage /> } />
-                <Route path="/" element={ logged_in ?
+                <Route path="/" element={ isLoggedIn ?
                     <Menubar /> :
                     <Navigate to="/login" />
                 }>

@@ -2,7 +2,9 @@ import React from 'react';
 
 export default React.createContext({
     loading: true,
-    logged_in: false,
+    isLoggedIn: false,
+    isTechnician: false,
+    isAdmin: false,
     user: null,
     setToken: (token) => {;},
     invalidateToken: () => {;},

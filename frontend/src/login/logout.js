@@ -8,7 +8,7 @@ export default function Logout() {
 
     useEffect(() => {
         invalidateToken();
-    }, []);
+    });
 
     return (
         <React.Fragment> { !logged_in &&

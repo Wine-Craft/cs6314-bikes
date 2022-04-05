@@ -1,11 +1,10 @@
-import { getModel } from '../schema.js';
+import { getSkillModel } from '../schema.js';
 
 export default async function getSkills(req, res) {
-    const Skills = getModel();
+    const Skills = getSkillModel();
 
     try {
         const skills = await Skills.find({});
-        console.log(skills);
         return res.status(200).json({
            skills,
         });

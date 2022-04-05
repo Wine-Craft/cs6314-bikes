@@ -9,7 +9,9 @@ export default function Provider({
     children,
 }) {
     const [ loading, setLoading ] = useState(true);
-    const [ logged_in, setLoggedIn ] = useState(false);
+    const [ isLoggedIn, setLoggedIn ] = useState(false);
+    const [ isTechnician, setIsTechnician ] = useState(false);
+    const [ isAdmin, setIsAdmin ] = useState(false);
     const [ token, setToken ] = useState(null);
     const [ user, setUser ] = useState(null);
     const [ cookies ] = useState(new Cookies());
@@ -55,6 +57,8 @@ export default function Provider({
             const user = response.data.user;
             setLoggedIn(true);
             setUser(user);
+            setIsTechnician(Boolean(user.isTechnician));
+            setIsAdmin(Boolean(user.isAdmin));
             setLoading(false);
         } else if(response.status === 401) {
             invalidateToken();
@@ -81,7 +85,9 @@ export default function Provider({
     return (
         <SessionContext.Provider value={{
             loading: loading,
-            logged_in: logged_in,
+            isLoggedIn: isLoggedIn,
+            isTechnician: isTechnician,
+            isAdmin: isAdmin,
             user: user,
             setToken: storeToken,
             invalidateToken: invalidateToken,

@@ -1,22 +1,16 @@
 import mongoose from 'mongoose';
 
-const Skill = new mongoose.Schema({
-    name: {
-        type: String,
-        index: true,
-        unique: true,
-    },
+export const SkillSchema = new mongoose.Schema({
+    name: String,
     icon: String,
 });
-
-export const Schema = Skill;
 
 let model = null;
 
 export function initModel(connection) {
-    model = connection.model("Skill", Skill);
+    model = connection.model("Skill", SkillSchema);
 }
 
-export function getModel() {
+export function getSkillModel() {
     return model;
 }

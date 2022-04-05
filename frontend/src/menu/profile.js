@@ -11,12 +11,10 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 
-
-
 export default function ProfileDropdown({
     user,
 }) {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [ anchorEl, setAnchorEl ] = React.useState(null);
 
     const given = user.name.given.charAt(0);
     const family = user.name.family.charAt(0);

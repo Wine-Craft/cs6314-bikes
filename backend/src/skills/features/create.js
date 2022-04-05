@@ -1,6 +1,6 @@
 import { check } from "express-validator";
 
-import { getModel } from "../schema.js";
+import { getSkillModel } from "../schema.js";
 import skillAlreadyExists from "../validators/already-exists.js";
 
 export const createSkillRules = [
@@ -14,7 +14,7 @@ export const createSkillRules = [
     }),
 ];
 export async function createSkill(req, res) {
-    const Skills = getModel();
+    const Skills = getSkillModel();
 
     try {
         const { name, icon } = req.body;

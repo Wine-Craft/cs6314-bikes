@@ -16,11 +16,9 @@ import ProfileDropdown from "./profile";
 import SessionContext from "../session/context";
 
 export default function Menubar() {
-    const { user } = useContext(SessionContext);
+    const { user, isTechnician, isAdmin } = useContext(SessionContext);
 
-    useEffect(() => {
-        console.log(user);
-    }, [ user ]);
+    console.log(user, isTechnician, isAdmin);
 
     return (
         <div>
@@ -64,7 +62,11 @@ export default function Menubar() {
                         px: 1,
                         flexGrow: 0,
                     }}>
-                        <ProfileDropdown user={ user }/>
+                        <ProfileDropdown
+                            isTechnician={ isTechnician }
+                            isAdmin={ isAdmin }
+                            user={ user }
+                        />
                     </Box>
                 </Toolbar>
             </AppBar>

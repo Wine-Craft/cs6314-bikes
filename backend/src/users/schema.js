@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 
-const User = new mongoose.Schema({
+export const UserSchema = new mongoose.Schema({
     email: String,
     password: String,
     name: {
@@ -14,31 +14,40 @@ const User = new mongoose.Schema({
     googleProfileImgURL: String,
 
     isAdmin: Boolean,
+    isTechnician: Boolean,
 }, {
     timestamps: true,
     toJSON: {
         virtuals: true,
-    }
+    },
 });
 
-User.methods.setPassword = async function(plain) {
+UserSchema.methods.nowTechnician = function() {
+    this.isTechnician = true;
+}
+
+UserSchema.methods.noLongerTechnician = function() {
+    this.isTechnician = false;
+}
+
+UserSchema.methods.setPassword = async function(plain) {
     const hashed = await bcrypt.hash(plain, 10);
     this.password = hashed;
 }
 
-User.methods.checkPassword = async function(plain) {
+UserSchema.methods.checkPassword = async function(plain) {
     const match = await bcrypt.compare(plain, this.password);
     return match;
 }
 
-User.methods.getSafeObject = function() {
+UserSchema.methods.getSafeObject = function() {
     const user = this;
     user.password = undefined;
     user.googleID = undefined;
     return user;
 }
 
-User.virtual('imageURL').get(function() {
+UserSchema.virtual('imageURL').get(function() {
     if(this.uploadedImageURL != null && this.uploadedImageURL != '') {
         return this.uploadedImageURL;
     }
@@ -46,16 +55,14 @@ User.virtual('imageURL').get(function() {
         return this.googleProfileImgURL;
     }
     return '';
- });
-
-export const Schema = User;
+});
 
 let model = null;
 
 export function initModel(connection) {
-    model = connection.model("User", User);
+    model = connection.model("User", UserSchema);
 }
 
-export function getModel() {
+export function getUserModel() {
     return model;
 }

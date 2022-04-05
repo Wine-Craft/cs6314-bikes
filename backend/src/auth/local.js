@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { check } from "express-validator";
 import { Strategy } from 'passport-local';
 
-import { getModel as getUserModel }  from '../users/schema.js';
+import { getUserModel }  from '../users/schema.js';
 
 export const localRules = [
     check('username').isEmail(),
