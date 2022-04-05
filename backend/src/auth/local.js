@@ -35,7 +35,6 @@ export async function localCallback(req, res) {
         id: user._id,
     }, process.env.JWT_SECRET);
     res.status(200).json({
-        user: req.user.getSafeObject(),
         token: token,
     });
 };

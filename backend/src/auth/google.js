@@ -31,7 +31,7 @@ export const GoogleStrategy = new Strategy({
                 return done(null, false);
             }
 
-            googleUser = new User({
+            googleUser = await User.create({
                 googleID: profile.id,
             });
         }
@@ -40,16 +40,26 @@ export const GoogleStrategy = new Strategy({
         googleUser.name.given = profile.name.givenName;
         googleUser.name.family = profile.name.familyName;
         googleUser.googleProfileImgURL = profile._json.picture;
-        if(googleUser.isModified()) { // if changed
-            await googleUser.save(); // save the user
 
-            if(googleUser.isTechnician) {
-                await Technician.updateTechnicianUser(googleUser); // update the associated technician profile
+        let technician = await Technician.findOne({
+            userID: googleUser._id,
+        });
+        if(technician) {
+            googleUser.nowTechnician();
+            technician.updateFromUser(googleUser);
+            if(technician.isModified()) {
+                await technician.save();
             }
+        } else {
+            googleUser.noLongerTechnician();
+        }
+
+        if(googleUser.isModified()) {
+            await googleUser.save();
         }
         return done(null, googleUser);
     } catch(err) {
-        return done(err);
+        return done(err, false);
     }
 });
 export const googleRules = [
@@ -61,7 +71,6 @@ export async function googleCallback(req, res) {
         id: user._id,
     }, process.env.JWT_SECRET);
     res.status(200).json({
-        user: req.user.getSafeObject(),
         token: token,
     });
 }
