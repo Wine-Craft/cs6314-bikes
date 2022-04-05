@@ -5,6 +5,7 @@ import Menubar from './menu/bar';
 import LoginPage from "./login/page";
 import LogoutPage from "./login/logout";
 import SessionContext from './session/context';
+import ProfilePage from "./profile/page";
 
 function App() {
     const { loading, isLoggedIn } = useContext(SessionContext);
@@ -31,6 +32,7 @@ function App() {
                             Home
                         </div>
                     } />
+                    <Route path="/profile" element={ <ProfilePage /> } />
                 </Route>
             </Routes>
         } { loading &&

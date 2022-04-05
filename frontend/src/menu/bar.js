@@ -12,7 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-import ProfileDropdown from "./profile";
+import Sidebar from './sidebar';
 import SessionContext from "../session/context";
 
 export default function Menubar() {
@@ -24,19 +24,13 @@ export default function Menubar() {
         <div>
             <AppBar position="fixed" sm={{
                 px: 10,
-            }}>
+            }} color="neutral">
                 <Toolbar>
                     <Box sx={{
                         flexGrow: 0,
                         mr: 2,
                     }}>
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                        >
-                            <MenuIcon />
-                        </IconButton>
+                        <Sidebar user={ user }/>
                     </Box>
                     <Box sx={{
                         flexGrow: 2,
@@ -57,16 +51,6 @@ export default function Menubar() {
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
-                    </Box>
-                    <Box sx={{
-                        px: 1,
-                        flexGrow: 0,
-                    }}>
-                        <ProfileDropdown
-                            isTechnician={ isTechnician }
-                            isAdmin={ isAdmin }
-                            user={ user }
-                        />
                     </Box>
                 </Toolbar>
             </AppBar>
