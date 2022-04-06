@@ -26,7 +26,31 @@ const theme = createTheme({
     typography: {
         fontSize: 16,
         fontWeightRegular: 500,
-    }
+    },
+    components: {
+        MuiListItem: {
+            styleOverrides: {
+                root: {
+                    paddingTop: 2,
+                    paddingBottom: 2,
+                }
+            }
+        },
+        MuiListItemIcon: {
+            styleOverrides: {
+                root: {
+                    minWidth: 40,
+                },
+            },
+        },
+        MuiListItemText: {
+            styleOverrides: {
+                secondary: {
+                    color: '#d16666',
+                }
+            }
+        }
+    },
 });
 
 export default theme;

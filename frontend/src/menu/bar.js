@@ -16,8 +16,6 @@ import Sidebar from './sidebar';
 import SessionContext from "../session/context";
 
 export default function Menubar() {
-    const { user, isTechnician, isAdmin } = useContext(SessionContext);
-
     return (
         <div>
             <AppBar position="fixed" sm={{
@@ -28,7 +26,7 @@ export default function Menubar() {
                         flexGrow: 0,
                         mr: 2,
                     }}>
-                        <Sidebar user={ user }/>
+                        <Sidebar />
                     </Box>
                     <Box sx={{
                         flexGrow: 2,
