@@ -18,8 +18,6 @@ import SessionContext from "../session/context";
 export default function Menubar() {
     const { user, isTechnician, isAdmin } = useContext(SessionContext);
 
-    console.log(user, isTechnician, isAdmin);
-
     return (
         <div>
             <AppBar position="fixed" sm={{

@@ -31,6 +31,7 @@ function LoginForm() {
             username: email,
             password: password,
         });
+        setLoading(false);
         if(response.status === 200) {
             const jwt_token = response.data.token;
             setToken(jwt_token);
@@ -39,7 +40,6 @@ function LoginForm() {
         } else {
             setErrorMsg("Server error, try again later.");
         }
-        setLoading(false);
     }
 
     async function onGoogleSuccess(response) {
@@ -50,6 +50,7 @@ function LoginForm() {
         const postResponse = await axios.post(url, {
             access_token: access_token,
         });
+        setLoading(false);
         if(postResponse.status === 200) {
             const jwt_token = postResponse.data.token;
             setToken(jwt_token);
@@ -58,7 +59,6 @@ function LoginForm() {
         } else {
             setErrorMsg("Server error, try again later.");
         }
-        setLoading(false);
     }
 
     const disabled = loading;

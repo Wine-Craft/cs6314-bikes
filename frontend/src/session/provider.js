@@ -16,10 +16,17 @@ export default function Provider({
     const [ user, setUser ] = useState(null);
     const [ cookies ] = useState(new Cookies());
 
-    function loadToken() {
-        const token = cookies.get('jwt_token')
-        setToken(token)
-        return token;
+    async function loadToken() {
+        const token = cookies.get('jwt_token');
+        if(token) {
+            return setToken(token);
+        }
+        setIsTechnician(false);
+        setLoggedIn(false);
+        setIsAdmin(false);
+        setLoading(false);
+        setUser(null);
+        setToken(null);
     }
 
     function storeToken(token) {
@@ -33,6 +40,10 @@ export default function Provider({
     }
 
     function invalidateToken() {
+        setIsTechnician(false);
+        setLoggedIn(false);
+        setIsAdmin(false);
+        setUser(null);
         setToken(null);
         cookies.remove('jwt_token');
     }
@@ -47,6 +58,7 @@ export default function Provider({
     }
 
     async function downloadMe() {
+        setLoading(true);
         const url = generateURL('/auth/me');
         const response = await axios.get(url, {
             headers: {
@@ -55,30 +67,24 @@ export default function Provider({
         });
         if(response.status === 200) {
             const user = response.data.user;
-            setLoggedIn(true);
-            setUser(user);
             setIsTechnician(Boolean(user.isTechnician));
             setIsAdmin(Boolean(user.isAdmin));
-            setLoading(false);
+            setLoggedIn(true);
+            setUser(user);
         } else if(response.status === 401) {
             invalidateToken();
         }
+        setLoading(false);
     }
 
     useEffect(() => {
         // initialize
-        setLoading(true);
         loadToken();
     }, []);
 
     useEffect(() => {
-        setLoading(true);
         if(token != null) {
             downloadMe();
-        } else {
-            setLoggedIn(false);
-            setUser(null);
-            setLoading(false);
         }
     }, [ token ]);
 

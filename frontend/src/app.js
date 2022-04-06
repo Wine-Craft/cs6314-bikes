@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import Menubar from './menu/bar';
@@ -8,7 +8,7 @@ import SessionContext from './session/context';
 import ProfilePage from "./profile/page";
 
 function App() {
-    const { loading, isLoggedIn } = useContext(SessionContext);
+    const { loading, isLoggedIn, invalidateToken } = useContext(SessionContext);
 
     return (
         <React.Fragment> { !loading &&
