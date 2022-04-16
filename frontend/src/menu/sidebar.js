@@ -74,22 +74,22 @@ export default function Sidebar() {
                         </ListItemButton>
                     </ListItem>
                     <ListItem>
-                        <ListItemButton component={ Link } to="/create-order">
+                        <ListItemButton component={ Link } to="/create-job">
                             <ListItemIcon>
                                 <NoteAddIcon />
                             </ListItemIcon>
                             <ListItemText
-                                primary={ `New Order` }
+                                primary={ `New Job` }
                             />
                         </ListItemButton>
                     </ListItem>
                     <ListItem>
-                        <ListItemButton component={ Link } to="/orders">
+                        <ListItemButton component={ Link } to="/my-jobs">
                             <ListItemIcon>
                                 <ReceiptLongIcon />
                             </ListItemIcon>
                             <ListItemText
-                                primary={ `Orders` }
+                                primary={ `My Jobs` }
                             />
                         </ListItemButton>
                     </ListItem>
@@ -99,7 +99,7 @@ export default function Sidebar() {
                                 <ListIcon />
                             </ListItemIcon>
                             <ListItemText
-                                primary={ `Search Technicians` }
+                                primary={ `Browse Technicians` }
                             />
                         </ListItemButton>
                     </ListItem>
@@ -117,11 +117,8 @@ export default function Sidebar() {
                         <>
                             <ListItem>
                                 <ListItemButton onClick={ () => setTechOpen(!techOpen) }>
-                                    <ListItemIcon>
-                                        <EngineeringIcon />
-                                    </ListItemIcon>
                                     <ListItemText>
-                                        Technician Menu
+                                        Technicians
                                     </ListItemText>
                                     { techOpen ? <ExpandLessIcon /> : <ExpandMoreIcon /> }
                                 </ListItemButton>
@@ -136,7 +133,7 @@ export default function Sidebar() {
                                                 <DashboardIcon />
                                             </ListItemIcon>
                                             <ListItemText>
-                                                Orders Dashboard
+                                                Job Dashboard
                                             </ListItemText>
                                         </ListItemButton>
                                     </ListItem>
@@ -148,11 +145,8 @@ export default function Sidebar() {
                         <>
                             <ListItem>
                                 <ListItemButton onClick={ () => setAdminOpen(!adminOpen) }>
-                                    <ListItemIcon>
-                                        <AdminPanelSettingsIcon />
-                                    </ListItemIcon>
                                     <ListItemText>
-                                        Admin Menu
+                                        Admins
                                     </ListItemText>
                                     { adminOpen ? <ExpandLessIcon /> : <ExpandMoreIcon /> }
                                 </ListItemButton>

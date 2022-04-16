@@ -43,7 +43,6 @@ UserSchema.methods.checkPassword = async function(plain) {
 UserSchema.methods.getSafeObject = function() {
     const user = this;
     user.password = undefined;
-    user.googleID = undefined;
     return user;
 }
 
@@ -55,6 +54,10 @@ UserSchema.virtual('imageURL').get(function() {
         return this.googleProfileImgURL;
     }
     return '';
+});
+
+UserSchema.virtual('isGoogleUser').get(function() {
+    return this.googleID != null;
 });
 
 let model = null;
