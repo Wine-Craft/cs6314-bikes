@@ -43,7 +43,7 @@ export default function Sidebar() {
     const [ techOpen, setTechOpen ] = useState(true);
     const [ adminOpen, setAdminOpen ] = useState(false);
 
-    const textColor = theme.palette.neutral.contrastText;
+    const textColor = theme.palette.primary.contrastText;
     return (
         <React.Fragment>
             <Tooltip title={ "Open menu" }>

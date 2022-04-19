@@ -3,19 +3,19 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
     palette: {
         mode: 'light',
-        primary: {
+        secondary: {
             light: '#ff9694',
             main: '#d16666',
             dark: '#9c373c',
             contrastText: '#e8eddf',
         },
-        secondary: {
+        neutral: {
             light: '#fffe8c',
             main: '#f5cb5c',
             dark: '#bf9a2b',
             contrastText: '#242423',
         },
-        neutral: {
+        primary: {
             main: '#2D3047',
             contrastText: '#e8eddf',
         },
@@ -24,8 +24,8 @@ const theme = createTheme({
         },
     },
     typography: {
-        fontSize: 14,
-        fontWeightRegular: 500,
+        fontSize: 16,
+        fontWeightRegular: 400,
     },
     components: {
         MuiListItem: {

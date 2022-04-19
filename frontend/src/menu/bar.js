@@ -20,7 +20,7 @@ export default function Menubar() {
         <div>
             <AppBar position="fixed" sm={{
                 px: 10,
-            }} color="neutral">
+            }}>
                 <Toolbar>
                     <Box sx={{
                         flexGrow: 0,
