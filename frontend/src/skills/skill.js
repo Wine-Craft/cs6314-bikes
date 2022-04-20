@@ -1,20 +1,18 @@
-import {Chip} from "@mui/material";
+import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
 
 export default function Skill({
-    id,
-    icon,
-    name,
+    skill,
 }) {
     return (
         <Chip
             avatar={
                 <Avatar>
-                    { icon }
+                    { skill.icon }
                 </Avatar>
             }
-            key={ id }
-            label={ name }
+            key={ skill._id }
+            label={ skill.name }
         />
     );
 }

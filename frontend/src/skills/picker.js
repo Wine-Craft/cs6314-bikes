@@ -1,21 +1,20 @@
+import axios from "axios";
 import React, {useContext, useEffect, useState} from 'react';
-import {
-    Checkbox,
-    Chip,
-    FormControl,
-    FormHelperText,
-    InputLabel,
-    ListItemText,
-    MenuItem,
-    OutlinedInput,
-    Select
-} from "@mui/material";
+
+import Box from "@mui/material/Box";
+import Select from "@mui/material/Select";
+import Avatar from "@mui/material/Avatar";
+import MenuItem from "@mui/material/MenuItem";
+import Checkbox from "@mui/material/Checkbox";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import ListItemText from "@mui/material/ListItemText";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import FormHelperText from "@mui/material/FormHelperText";
+
+import Skill from "./skill";
 import SessionContext from "../session/context";
 import generateURL from "../utils/url-generator";
-import axios from "axios";
-import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import Skill from "./skill";
 
 export default function SkillsPicker({
     selected,
@@ -61,12 +60,11 @@ export default function SkillsPicker({
                         const skill = skills.find(skill => (
                             skill._id === id
                         ));
+                        if(skill == null) return;
                         return (
                             <Skill
-                                id={ id }
                                 key={ id }
-                                icon={ skill.icon }
-                                name={ skill.name }
+                                skill={ skill }
                             />
                         );
                     })} </Box>

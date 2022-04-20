@@ -4,8 +4,10 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Menubar from './menu/bar';
 import LoginPage from "./login/page";
 import LogoutPage from "./login/logout";
+import CreateJobPage from "./job/create-page";
 import SessionContext from './session/context';
-import ProfilePage from "./profile/page";
+import BrowseTechniciansPage from "./profile/browse";
+import EditTechnicianProfilePage from "./profile/edit-technician";
 
 function App() {
     const { loading, isLoggedIn, invalidateToken } = useContext(SessionContext);
@@ -32,7 +34,9 @@ function App() {
                             Home
                         </div>
                     } />
-                    <Route path="/profile" element={ <ProfilePage /> } />
+                    <Route path="/create-job" element={ <CreateJobPage /> } />
+                    <Route path="/browse-technicians" element={ <BrowseTechniciansPage /> } />
+                    <Route path="/profile" element={ <EditTechnicianProfilePage /> } />
                 </Route>
             </Routes>
         } { loading &&

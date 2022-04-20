@@ -42,7 +42,6 @@ UserSchema.methods.checkPassword = async function(plain) {
 
 UserSchema.methods.getSafeObject = function() {
     const user = this;
-    user.password = undefined;
     return user;
 }
 

@@ -4,8 +4,10 @@ import { createUpdateProfileRules, createUpdateProfile } from "./features/create
 import {isLoggedIn} from "../authorizer/authorizer.js";
 import validate from "../validator/validate.js";
 import {getTechnician} from "./features/get.js";
+import browseTechnicians from "./features/browse.js";
 
 const router = express.Router();
+router.get('/', isLoggedIn, browseTechnicians);
 router.get('/profile', isLoggedIn, getTechnician);
 router.post('/profile', isLoggedIn, createUpdateProfileRules, validate, createUpdateProfile);
 

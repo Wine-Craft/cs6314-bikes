@@ -1,15 +1,13 @@
 import React from 'react';
 
-import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
-import {InputAdornment, InputLabel, OutlinedInput} from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import FormControl from "@mui/material/FormControl";
+import InputAdornment from "@mui/material/InputAdornment";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -17,6 +15,7 @@ export default function ServicesInput({
     services,
     setServices,
     errors,
+    addable,
 }) {
     function handlePriceChange(index, price) {
         const newServices = [...services];
@@ -88,11 +87,13 @@ export default function ServicesInput({
                                 value={ service.title }
                             />
                         </Grid>
-                        <Grid item xs={ 1 }>
-                            <IconButton onClick={ () => handleRemoveService(index) }>
-                                <DeleteIcon />
-                            </IconButton>
-                        </Grid>
+                        <> { addable &&
+                            <Grid item xs={ 1 }>
+                                <IconButton onClick={ () => handleRemoveService(index) }>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </Grid>
+                        } </>
                         <Grid item xs={ 11 }>
                             <TextField
                                 label="Description"
@@ -108,7 +109,7 @@ export default function ServicesInput({
                     </Grid>
                 </Card>
             ))} </FormControl>
-            <Button onClick={ handleAddService } variant="outlined">Add Service</Button>
+            <> { addable && <Button onClick={ handleAddService } variant="outlined" color="success">Add Service</Button> } </>
         </React.Fragment>
     );
 }

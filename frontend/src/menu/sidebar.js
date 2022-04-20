@@ -94,7 +94,7 @@ export default function Sidebar() {
                         </ListItemButton>
                     </ListItem>
                     <ListItem>
-                        <ListItemButton component={ Link } to="/search-technicians">
+                        <ListItemButton component={ Link } to="/browse-technicians">
                             <ListItemIcon>
                                 <ListIcon />
                             </ListItemIcon>

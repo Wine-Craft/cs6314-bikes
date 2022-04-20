@@ -5,8 +5,8 @@ export async function getTechnician(req, res) {
 
     try {
         let userID = null;
-        if(req.params.id != null) {
-            userID = req.params.id;
+        if(req.query.id != null) {
+            userID = req.query.id;
         } else {
             userID = req.user._id;
         }
