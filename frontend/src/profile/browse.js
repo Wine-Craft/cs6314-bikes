@@ -32,8 +32,6 @@ export default function BrowseTechniciansPage() {
         downloadTechnicians();
     }, []);
 
-    console.log(technicians);
-
     return (
         <Grid m={ 3 }>
             <Box sx={{

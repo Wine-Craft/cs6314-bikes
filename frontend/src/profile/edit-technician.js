@@ -47,7 +47,6 @@ export default function EditTechnicianProfilePage() {
         let url = generateURL('/technicians/profile');
         if(id != null) {
             url = generateURL(`/technicians/profile?id=${ id }`);
-            console.log(url);
         }
 
         const response = await axios.get(url, {
@@ -82,6 +81,7 @@ export default function EditTechnicianProfilePage() {
             setSkills([]);
             setAboutMe('');
             setServices([]);
+            setSelf(true);
         }
         setBecoming(false);
         setChanged(false);
@@ -301,7 +301,7 @@ export default function EditTechnicianProfilePage() {
                                 </Grid>
                             </Grid>
                         </>
-                    } { !technician && !becoming &&
+                    } { self && !technician && !becoming &&
                         <Button onClick={ () => setBecoming(true) }>Become a Technician</Button>
                     } </>
                 </Grid>
