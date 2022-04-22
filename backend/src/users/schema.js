@@ -22,6 +22,13 @@ export const UserSchema = new mongoose.Schema({
     },
 });
 
+UserSchema.methods.toSafeJSON = function() {
+    const object = this.toObject();
+    delete object.password;
+    delete object.googleID;
+    return object;
+}
+
 UserSchema.methods.nowTechnician = function() {
     this.isTechnician = true;
 }
@@ -38,11 +45,6 @@ UserSchema.methods.setPassword = async function(plain) {
 UserSchema.methods.checkPassword = async function(plain) {
     const match = await bcrypt.compare(plain, this.password);
     return match;
-}
-
-UserSchema.methods.getSafeObject = function() {
-    const user = this;
-    return user;
 }
 
 UserSchema.virtual('imageURL').get(function() {

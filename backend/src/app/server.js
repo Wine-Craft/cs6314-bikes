@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import { authRouter } from '../auth/routes.js';
 import { skillsRouter } from "../skills/routes.js";
 import { techniciansRouter } from "../technicians/routes.js";
+import {jobsRouter} from "../job/routes.js";
 
 export default async function initServer() {
     const app = express();
@@ -23,6 +24,7 @@ export default async function initServer() {
 
     // use routes
     app.use('/auth', authRouter);
+    app.use('/jobs', jobsRouter);
     app.use('/skills', skillsRouter);
     app.use('/technicians', techniciansRouter);
 

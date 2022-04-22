@@ -21,7 +21,6 @@ export const TechnicianSchema = new mongoose.Schema({
     userID: {
         type: mongoose.Schema.Types.ObjectId,
         index: true,
-        unique: true,
     },
     email: String,
     name: {

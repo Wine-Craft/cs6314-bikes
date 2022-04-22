@@ -48,7 +48,7 @@ export async function createUpdateProfile(req, res) {
 
         return res.status(200).json({
             technician,
-            user,
+            user: user.toSafeJSON(),
         });
     } catch(err) {
         console.log(err);

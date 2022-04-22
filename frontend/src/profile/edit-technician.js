@@ -43,6 +43,8 @@ export default function EditTechnicianProfilePage() {
     const [ servicesError, setServicesError ] = useState({});
     const [ error, setError ] = useState(false);
 
+    console.log(user);
+
     async function loadTechnicianProfile(id) {
         let url = generateURL('/technicians/profile');
         if(id != null) {
@@ -194,7 +196,7 @@ export default function EditTechnicianProfilePage() {
                             marginBottom: 3,
                         }}
                     />
-                    <Typography variant="h4"> Your Profile </Typography>
+                    <Typography variant="h4"> Profile </Typography>
                     <Grid mt={1} mb={ 4 } container spacing={ 3 }>
                         <Grid item xs={ 6 }>
                             <TextField
