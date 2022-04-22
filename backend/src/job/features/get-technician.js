@@ -4,9 +4,16 @@ export default async function getTechnicianJobs(req, res) {
     const Job = getJobModel();
 
     try {
+        let canceled = req.query.canceled;
+
+        if(!canceled) {
+            canceled = false;
+        }
+
         const user = req.user;
         const jobs = await Job.find({
             "technician.userID": user._id,
+            canceled: canceled,
         });
 
         return res.status(200).json({
