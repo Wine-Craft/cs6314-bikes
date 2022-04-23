@@ -1,13 +1,15 @@
 import cors from 'cors';
+import http from 'http';
+import { Server }  from "socket.io";
 import morgan from 'morgan';
 import express from 'express';
 import bodyParser from "body-parser";
-
 
 import { authRouter } from '../auth/routes.js';
 import { skillsRouter } from "../skills/routes.js";
 import { techniciansRouter } from "../technicians/routes.js";
 import {jobsRouter} from "../job/routes.js";
+import setupJobDiscussionServer from "../job-discussion/server.js";
 
 export default async function initServer() {
     const app = express();
@@ -30,6 +32,10 @@ export default async function initServer() {
 
     // publish to HTTP server
     const port = process.env.PORT;
-    await app.listen(port);
+    const server = http.createServer(app);
+    server.listen(port);
+
+    setupJobDiscussionServer(new Server(server));
+
     console.log(`Server running on http://localhost:${ port }`);
 }

@@ -13,7 +13,6 @@ export default async function getTechnicianJobs(req, res) {
         const user = req.user;
         const jobs = await Job.find({
             "technician.userID": user._id,
-            canceled: canceled,
         });
 
         return res.status(200).json({

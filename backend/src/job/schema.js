@@ -11,6 +11,13 @@ export const JobSchema = new mongoose.Schema({
     tags: [ SkillSchema ],
 
     // decided together
+    messages: {
+        type: [{
+            user: mongoose.Schema.Types.ObjectId,
+            text: String,
+        }],
+        index: false,
+    },
     time: Date,
     price: Number,
     paid: Boolean,
