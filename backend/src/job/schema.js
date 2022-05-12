@@ -20,8 +20,9 @@ export const JobSchema = new mongoose.Schema({
     },
     time: Date,
     price: Number,
-    paid: Boolean,
+    accepted: Boolean,
     canceled: Boolean,
+    finished: Boolean,
 }, {
     timestamps: true,
     toJSON: {
@@ -32,7 +33,7 @@ JobSchema.index({ "requestor._id": 1, });
 JobSchema.index({ "technician.userID": 1, });
 
 JobSchema.virtual('isFinalized').get(function() {
-    if(this.time && this.price && this.paid) {
+    if(this.price && this.accepted) {
         return true;
     }
     return false;

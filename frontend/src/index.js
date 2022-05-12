@@ -19,7 +19,7 @@ ReactDOM.render(
         <SessionProvider>
             <BrowserRouter>
                 <ThemeProvider theme={ theme }>
-                    <CssBaseline />
+                    <CssBaseline />.
                     <App />
                 </ThemeProvider>
             </BrowserRouter>
