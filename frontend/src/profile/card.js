@@ -90,7 +90,10 @@ export default function TechnicianCard({
                         flexGrow: 1,
                     }}>
                         <Tooltip title="Request Job">
-                            <IconButton>
+                            <IconButton
+                                component={ Link }
+                                to={ `/create-job?id=${ userID }`}
+                            >
                                 <NoteAddIcon />
                             </IconButton>
                         </Tooltip>

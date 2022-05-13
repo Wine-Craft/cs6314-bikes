@@ -74,17 +74,7 @@ export default function Sidebar() {
                         </ListItemButton>
                     </ListItem>
                     <ListItem>
-                        <ListItemButton component={ Link } to="/create-job">
-                            <ListItemIcon>
-                                <NoteAddIcon />
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={ `New Job` }
-                            />
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                        <ListItemButton component={ Link } to="/my-jobs">
+                        <ListItemButton component={ Link } to="/jobs">
                             <ListItemIcon>
                                 <ReceiptLongIcon />
                             </ListItemIcon>
@@ -103,44 +93,6 @@ export default function Sidebar() {
                             />
                         </ListItemButton>
                     </ListItem>
-                    <ListItem>
-                        <ListItemButton component={ Link } to="/settings">
-                            <ListItemIcon>
-                                <SettingsIcon />
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={ `Settings` }
-                            />
-                        </ListItemButton>
-                    </ListItem>
-                    <> { isTechnician &&
-                        <>
-                            <ListItem>
-                                <ListItemButton onClick={ () => setTechOpen(!techOpen) }>
-                                    <ListItemText>
-                                        Technicians
-                                    </ListItemText>
-                                    { techOpen ? <ExpandLessIcon /> : <ExpandMoreIcon /> }
-                                </ListItemButton>
-                            </ListItem>
-                            <Collapse in={ techOpen } unmountOnExit>
-                                <List sx={{
-                                    pl: 3,
-                                }}>
-                                    <ListItem>
-                                        <ListItemButton>
-                                            <ListItemIcon>
-                                                <DashboardIcon />
-                                            </ListItemIcon>
-                                            <ListItemText>
-                                                Job Dashboard
-                                            </ListItemText>
-                                        </ListItemButton>
-                                    </ListItem>
-                                </List>
-                            </Collapse>
-                        </>
-                    } </>
                     <> { isAdmin &&
                         <>
                             <ListItem>

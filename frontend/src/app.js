@@ -8,6 +8,7 @@ import CreateJobPage from "./job/create-page";
 import SessionContext from './session/context';
 import BrowseTechniciansPage from "./profile/browse";
 import EditTechnicianProfilePage from "./profile/edit-technician";
+import JobList from "./job/page";
 
 function App() {
     const { loading, isLoggedIn, invalidateToken } = useContext(SessionContext);
@@ -15,11 +16,6 @@ function App() {
     return (
         <React.Fragment> { !loading &&
             <Routes>
-                <Route exact path="/" element={
-                    <div>
-                        Information page
-                    </div>
-                } />
                 <Route path="/login" element={ isLoggedIn ?
                     <Navigate to="/home" /> :
                     <LoginPage />
@@ -37,6 +33,7 @@ function App() {
                     <Route path="/create-job" element={ <CreateJobPage /> } />
                     <Route path="/browse-technicians" element={ <BrowseTechniciansPage /> } />
                     <Route path="/profile" element={ <EditTechnicianProfilePage /> } />
+                    <Route path="/jobs" element={ <JobList /> } />
                 </Route>
             </Routes>
         } { loading &&
